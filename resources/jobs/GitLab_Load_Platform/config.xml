@@ -19,11 +19,13 @@
           <description>The branch of the git repo for Platform Management.</description>
           <defaultValue>jenkins-2</defaultValue>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.BooleanParameterDefinition>
-          <name>GENERATE_EXAMPLE_WORKSPACE</name>
-          <description>Should an example workspace be generated?</description>
-          <defaultValue>false</defaultValue>
-        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.PasswordParameterDefinition>
+          <name>GITLAB_ROOT_PASSWORD</name>
+          <description>Gitlab's root user password</description>
+          <defaultValue>
+          {AQAAABAAAAAQ0LTuHbNMmbH9n4dQd3wR9/2wFbP7+F0F0nBuWMGQY5s=}
+          </defaultValue>
+        </hudson.model.PasswordParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.25">
