@@ -36,6 +36,9 @@
     <string>method com.dabsquared.gitlabjenkins.connection.GitLabConnectionConfig getConnections</string>
     <string>method java.util.Collection clear</string>
     <string>method com.dabsquared.gitlabjenkins.connection.GitLabConnectionConfig addConnection com.dabsquared.gitlabjenkins.connection.GitLabConnection</string>
+    <string>new org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl com.cloudbees.plugins.credentials.CredentialsScope java.lang.String java.lang.String hudson.util.Secret</string>
+    <string>method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy getRoleMap java.lang.String</string>
+    <string>method com.michelin.cio.hudson.plugins.rolestrategy.RoleMap getRole java.lang.String</string>
   </approvedSignatures>
   <aclApprovedSignatures/>
   <approvedClasspathEntries/>
