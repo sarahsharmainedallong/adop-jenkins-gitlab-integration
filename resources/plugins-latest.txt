@@ -131,3 +131,4 @@ slack:latest
 sauce-ondemand:latest
 gitlab-plugin:latest
 sonar-gerrit:latest
+pipeline-utility-steps:latest

@@ -131,3 +131,4 @@ slack:2.3
 sauce-ondemand:1.165
 gitlab-plugin:1.4.8
 sonar-gerrit:2.0
+pipeline-utility-steps:latest:1.4.1

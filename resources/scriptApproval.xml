@@ -40,6 +40,16 @@
     <string>method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy getRoleMap java.lang.String</string>
     <string>method com.michelin.cio.hudson.plugins.rolestrategy.RoleMap getRole java.lang.String</string>
     <string>new com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl com.cloudbees.plugins.credentials.CredentialsScope java.lang.String java.lang.String java.lang.String java.lang.String</string>
+    <string>method java.util.Collection toArray</string>
+    <string>method org.apache.maven.model.Model getVersion</string>
+    <string>staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods flatten java.util.List</string>
+    <string>staticField hudson.plugins.sonar.utils.SQServerVersions SQ_5_3_OR_HIGHER</string>
+    <string>new hudson.plugins.sonar.model.TriggersConfig</string>
+    <string>new hudson.plugins.sonar.SonarInstallation java.lang.String java.lang.String java.lang.String java.lang.String java.lang.String java.lang.String java.lang.String java.lang.String java.lang.String hudson.plugins.sonar.model.TriggersConfig java.lang.String java.lang.String java.lang.String</string>
+    <string>hudson.plugins.sonar.SonarGlobalConfiguration getInstallations</string>
+    <string>hudson.plugins.sonar.SonarInstallation getName</string>
+    <string>method hudson.plugins.sonar.SonarGlobalConfiguration setInstallations hudson.plugins.sonar.SonarInstallation[]</string>
+    <string>java.util.Collections max java.util.Collection</string>
   </approvedSignatures>
   <aclApprovedSignatures/>
   <approvedClasspathEntries/>

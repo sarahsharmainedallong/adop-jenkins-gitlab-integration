@@ -26,7 +26,7 @@
         <com.cloudbees.plugins.credentials.CredentialsParameterDefinition plugin="credentials@2.1.16">
           <name>GITLAB_CREDENTIALS</name>
           <description></description>
-          <defaultValue>gitlab-credentials</defaultValue>
+          <defaultValue>gitlab-admin-credentials</defaultValue>
           <credentialType>com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl</credentialType>
           <required>false</required>
         </com.cloudbees.plugins.credentials.CredentialsParameterDefinition>
@@ -105,19 +105,16 @@ fi
 
 echo &quot;Adding ssh key&quot;
 key=$(cat ~/.ssh/id_rsa.pub)
-curl --header &quot;PRIVATE-TOKEN: $GITLAB_TOKEN&quot; -X POST &quot;${GITLAB_HTTP_URL}/api/v4/user/keys&quot; --data-urlencode &quot;title=jenkins@adop-core&quot; --data-urlencode &quot;key=${key}&quot;
+curl -v --header &quot;PRIVATE-TOKEN: $GITLAB_TOKEN&quot; -X POST &quot;${GITLAB_HTTP_URL}/api/v4/user/keys&quot; --data-urlencode &quot;title=jenkins@adop-core&quot; --data-urlencode &quot;key=${key}&quot;
 
 echo &quot;Create the platform-management repo in ${GITLAB_HTTP_URL}&quot;
 target_repo_name=&quot;platform-management&quot;
-curl --header &quot;PRIVATE-TOKEN: $GITLAB_TOKEN&quot; -X POST &quot;${GITLAB_HTTP_URL}/api/v4/projects?name=${target_repo_name}&quot;
+curl -v --header &quot;PRIVATE-TOKEN: $GITLAB_TOKEN&quot; -X POST &quot;${GITLAB_HTTP_URL}/api/v4/projects?name=${target_repo_name}&quot;
 
 echo &quot;Create a gitlab repository for platform management&quot;
 git remote add adop git@${GITLAB_HOST_NAME}:root/$target_repo_name.git
 git fetch adop
 git push adop +refs/remotes/origin/*:refs/heads/*
-
-# Set the default branch for platform management repo
-curl --header &quot;PRIVATE-TOKEN: $GITLAB_TOKEN&quot; -X PUT &quot;${GITLAB_HTTP_URL}/api/v4/projects/name=${target_repo_name}&quot;
 
 # Add the GITLAB_TOKEN to a file for execute system groovy script use, it will be deleted at the end
 echo &quot;$GITLAB_TOKEN&quot; &gt; /tmp/gitlab_token_file</command>
@@ -149,6 +146,11 @@ echo &quot;$GITLAB_TOKEN&quot; &gt; /tmp/gitlab_token_file</command>
       <command># Delete generated token file
 rm -f /tmp/gitlab_token_file</command>
     </hudson.tasks.Shell>
+    <hudson.plugins.groovy.SystemGroovy plugin="groovy@2.0">
+      <source class="hudson.plugins.groovy.FileSystemScriptSource">
+        <scriptFile>${WORKSPACE}/gitlab/groovy/configure_admin_credentials.groovy</scriptFile>
+      </source>
+    </hudson.plugins.groovy.SystemGroovy>
   </builders>
   <publishers/>
   <buildWrappers>
