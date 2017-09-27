@@ -39,6 +39,7 @@
     <string>new org.jenkinsci.plugins.plaincredentials.impl.StringCredentialsImpl com.cloudbees.plugins.credentials.CredentialsScope java.lang.String java.lang.String hudson.util.Secret</string>
     <string>method com.michelin.cio.hudson.plugins.rolestrategy.RoleBasedAuthorizationStrategy getRoleMap java.lang.String</string>
     <string>method com.michelin.cio.hudson.plugins.rolestrategy.RoleMap getRole java.lang.String</string>
+    <string>new com.cloudbees.plugins.credentials.impl.UsernamePasswordCredentialsImpl com.cloudbees.plugins.credentials.CredentialsScope java.lang.String java.lang.String java.lang.String java.lang.String</string>
   </approvedSignatures>
   <aclApprovedSignatures/>
   <approvedClasspathEntries/>
