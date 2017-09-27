@@ -50,6 +50,7 @@
     <string>hudson.plugins.sonar.SonarInstallation getName</string>
     <string>method hudson.plugins.sonar.SonarGlobalConfiguration setInstallations hudson.plugins.sonar.SonarInstallation[]</string>
     <string>java.util.Collections max java.util.Collection</string>
+    <string>com.dabsquared.gitlabjenkins.connection.GitLabConnectionConfig setUseAuthenticatedEndpoint boolean</string>
   </approvedSignatures>
   <aclApprovedSignatures/>
   <approvedClasspathEntries/>
