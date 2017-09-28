@@ -51,6 +51,14 @@
     <string>method hudson.plugins.sonar.SonarGlobalConfiguration setInstallations hudson.plugins.sonar.SonarInstallation[]</string>
     <string>java.util.Collections max java.util.Collection</string>
     <string>com.dabsquared.gitlabjenkins.connection.GitLabConnectionConfig setUseAuthenticatedEndpoint boolean</string>
+    <string>new hudson.model.JDK$DescriptorImpl</string>
+    <string>method jenkins.model.Jenkins getUpdateCenter</string>
+    <string>method hudson.model.UpdateCenter getById java.lang.String</string>
+    <string>method hudson.model.UpdateSite updateDirectlyNow boolean</string>
+    <string>new hudson.tools.JDKInstaller java.lang.String boolean</string>
+    <string>new hudson.tools.InstallSourceProperty java.util.List</string>
+    <string>new hudson.model.JDK java.lang.String java.lang.String java.util.List</string>
+    <string>method hudson.tools.ToolDescriptor getInstallations</string>
   </approvedSignatures>
   <aclApprovedSignatures/>
   <approvedClasspathEntries/>
