@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <scriptApproval plugin="script-security@1.23">
   <approvedScriptHashes/>
+  <!-- Reference why we do this - http://blog.ehrnhoefer.com/2017-04-23-jenkins-groovy-security/ -->
   <approvedSignatures>
     <string>field java.util.ArrayList size</string>
     <string>method groovy.lang.GString plus java.lang.String</string>
