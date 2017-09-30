@@ -116,8 +116,31 @@ git remote add adop git@${GITLAB_HOST_NAME}:root/$target_repo_name.git
 git fetch adop
 git push adop +refs/remotes/origin/*:refs/heads/*
 
+set +x
 # Add the GITLAB_TOKEN to a file for execute system groovy script use, it will be deleted at the end
-echo &quot;$GITLAB_TOKEN&quot; &gt; /tmp/gitlab_token_file</command>
+echo &quot;$GITLAB_TOKEN&quot; &gt; /tmp/gitlab_token_file
+
+# Create SonarQube Administrator user token
+curl -u &quot;${INITIAL_ADMIN_USER}:${INITIAL_ADMIN_PASSWORD}&quot; &quot;http://sonar-web:9000/api/user_tokens/search&quot; | jq &apos;.userTokens[].name&apos; | tr -d &apos;&quot; &apos; &gt; tokens.txt
+tokens=$(cat tokens.txt)
+if [ ${#tokens[@]} -gt 0 ]; then
+  for token in $(cat tokens.txt); do
+      if [ $token == &quot;adop-token&quot; ]; then
+          echo &quot;deleting existing token in sonarqube&quot;
+          curl -v -X POST -u &quot;${INITIAL_ADMIN_USER}:${INITIAL_ADMIN_PASSWORD}&quot; &quot;${SONAR_SERVER_URL}/api/user_tokens/revoke?name=adop-token&quot;
+      fi
+  done
+fi
+
+adop_sonar_token=$(curl -X POST -u &quot;${INITIAL_ADMIN_USER}:${INITIAL_ADMIN_PASSWORD}&quot; &quot;${SONAR_SERVER_URL}/api/user_tokens/generate?name=adop-token&quot; | jq &apos;.token&apos; | tr -d &apos;&quot; &apos;)
+
+if [ adop_sonar_token == &quot;null&quot; ]; then
+	echo &quot;Could not get the token for user ${INITIAL_ADMIN} in sonarqube server ${SONAR_SERVER_URL}&quot;
+    exit 1
+fi
+
+echo &quot;Passing SonarQube token to /tmp/sonar_token_file&quot;
+echo $adop_sonar_token &gt; /tmp/sonar_token_file</command>
     </hudson.tasks.Shell>
     <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.65">
       <targets>bootstrap/**/*.groovy</targets>
@@ -134,23 +157,28 @@ echo &quot;$GITLAB_TOKEN&quot; &gt; /tmp/gitlab_token_file</command>
     </javaposse.jobdsl.plugin.ExecuteDslScripts>
     <hudson.plugins.groovy.SystemGroovy plugin="groovy@2.0">
       <source class="hudson.plugins.groovy.FileSystemScriptSource">
-        <scriptFile>${WORKSPACE}/gitlab/groovy/configure_gitlab_connection.groovy</scriptFile>
+        <scriptFile>${WORKSPACE}/system/groovy/configure_gitlab_connection.groovy</scriptFile>
       </source>
     </hudson.plugins.groovy.SystemGroovy>
     <hudson.plugins.groovy.SystemGroovy plugin="groovy@2.0">
       <source class="hudson.plugins.groovy.FileSystemScriptSource">
-        <scriptFile>${WORKSPACE}/gitlab/groovy/configure_gitlab_secretText.groovy</scriptFile>
+        <scriptFile>${WORKSPACE}/system/groovy/configure_gitlab_secretText.groovy</scriptFile>
+      </source>
+    </hudson.plugins.groovy.SystemGroovy>
+    <hudson.plugins.groovy.SystemGroovy plugin="groovy@2.0">
+      <source class="hudson.plugins.groovy.FileSystemScriptSource">
+        <scriptFile>${WORKSPACE}/system/groovy/configure_admin_credentials.groovy</scriptFile>
+      </source>
+    </hudson.plugins.groovy.SystemGroovy>
+    <hudson.plugins.groovy.SystemGroovy plugin="groovy@2.0">
+      <source class="hudson.plugins.groovy.FileSystemScriptSource">
+        <scriptFile>${WORKSPACE}/system/groovy/configure_sonarqube_installation.groovy</scriptFile>
       </source>
     </hudson.plugins.groovy.SystemGroovy>
     <hudson.tasks.Shell>
       <command># Delete generated token file
-rm -f /tmp/gitlab_token_file</command>
+rm -f /tmp/gitlab_token_file /tmp/sonar_token_file</command>
     </hudson.tasks.Shell>
-    <hudson.plugins.groovy.SystemGroovy plugin="groovy@2.0">
-      <source class="hudson.plugins.groovy.FileSystemScriptSource">
-        <scriptFile>${WORKSPACE}/gitlab/groovy/configure_admin_credentials.groovy</scriptFile>
-      </source>
-    </hudson.plugins.groovy.SystemGroovy>
   </builders>
   <publishers/>
   <buildWrappers>
@@ -159,6 +187,7 @@ rm -f /tmp/gitlab_token_file</command>
       <cleanupParameter></cleanupParameter>
       <externalDelete></externalDelete>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <com.michelin.cio.hudson.plugins.maskpasswords.MaskPasswordsBuildWrapper/>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.13">
       <bindings>
         <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
