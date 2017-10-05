@@ -60,6 +60,7 @@
     <string>new hudson.tools.InstallSourceProperty java.util.List</string>
     <string>new hudson.model.JDK java.lang.String java.lang.String java.util.List</string>
     <string>method hudson.tools.ToolDescriptor getInstallations</string>
+    <string>method hudson.tools.ToolDescriptor setInstallations hudson.tools.ToolInstallation[]</string>
   </approvedSignatures>
   <aclApprovedSignatures/>
   <approvedClasspathEntries/>
