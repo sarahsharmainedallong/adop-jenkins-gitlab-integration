@@ -1,12 +1,11 @@
 FROM jenkins/jenkins:2.73.1
 
-MAINTAINER Nick Griffin, <nicholas.griffin>
+LABEL maintainer="Bryan Sazon <john.bryan.j.sazon@accenture.com>"
 
 ENV GERRIT_HOST_NAME gerrit
 ENV GERRIT_PORT 8080
 ENV GERRIT_SSH_PORT 29418
 ENV GERRIT_PROFILE="ADOP Gerrit" GERRIT_JENKINS_USERNAME="" GERRIT_JENKINS_PASSWORD=""
-
 
 # Copy in configuration files
 COPY resources/plugins-latest.txt /usr/share/jenkins/ref/
