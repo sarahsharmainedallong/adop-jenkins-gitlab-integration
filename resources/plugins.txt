@@ -133,3 +133,4 @@ gitlab-plugin:1.4.8
 sonar-gerrit:2.0
 pipeline-utility-steps:latest:1.4.1
 blueocean:1.2.4
+gradle:1.28
