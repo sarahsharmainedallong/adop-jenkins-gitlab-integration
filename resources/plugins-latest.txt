@@ -134,3 +134,4 @@ sonar-gerrit:latest
 pipeline-utility-steps:latest
 blueocean:latest
 gradle:latest
+permissive-script-security:latest
