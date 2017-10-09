@@ -82,7 +82,8 @@ echo -e &quot;Host newsource.accenture.com
 &quot; &gt;&gt; ~/.ssh/config
 
 # install jq
-sh ${WORKSPACE}/common/utils/install_jq.sh
+chmod +x ${WORKSPACE}/common/utils/install_jq.sh
+./${WORKSPACE}/common/utils/install_jq.sh
 export PATH=&quot;$PATH:$HOME/bin&quot;
 
 echo &quot;Getting the Gitlab token&quot;
