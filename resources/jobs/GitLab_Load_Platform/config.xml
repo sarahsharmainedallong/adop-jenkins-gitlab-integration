@@ -39,7 +39,7 @@
     </hudson.model.ParametersDefinitionProperty>
     <de.pellepelster.jenkins.walldisplay.WallDisplayJobProperty plugin="jenkinswalldisplay@0.6.34"/>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.5.1">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.6.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -83,8 +83,11 @@ echo -e &quot;Host newsource.accenture.com
 
 # install jq
 chmod +x ${WORKSPACE}/common/utils/install_jq.sh
-./${WORKSPACE}/common/utils/install_jq.sh
+${WORKSPACE}/common/utils/install_jq.sh
 export PATH=&quot;$PATH:$HOME/bin&quot;
+
+
+curl -X POST &quot;${GITLAB_HTTP_URL}/api/v4/session?login=${GITLAB_USER}&amp;password=${GITLAB_PASSWORD}&quot; | jq &apos;.&apos;
 
 echo &quot;Getting the Gitlab token&quot;
 get_response=$(curl -I -X POST &quot;${GITLAB_HTTP_URL}/api/v4/session?login=${GITLAB_USER}&amp;password=${GITLAB_PASSWORD}&quot;)
@@ -99,7 +102,7 @@ fi
 
 GITLAB_TOKEN=$(curl -X POST &quot;${GITLAB_HTTP_URL}/api/v4/session?login=${GITLAB_USER}&amp;password=${GITLAB_PASSWORD}&quot; | jq &apos;.private_token&apos; | tr -d &apos;&quot;&apos;)
 
-if [[ $GITLAB_TOKEN -ne &quot;null&quot; ]]; then
+if [[ $GITLAB_TOKEN -ne &quot;null&quot; || -z $GITLAB_TOKEN ]]; then
 	echo &quot;Token is null&quot;
     exit 1
 fi
@@ -143,7 +146,7 @@ fi
 echo &quot;Passing SonarQube token to /tmp/sonar_token_file&quot;
 echo $adop_sonar_token &gt; /tmp/sonar_token_file</command>
     </hudson.tasks.Shell>
-    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.65">
+    <javaposse.jobdsl.plugin.ExecuteDslScripts plugin="job-dsl@1.66">
       <targets>bootstrap/**/*.groovy</targets>
       <usingScriptText>false</usingScriptText>
       <sandbox>false</sandbox>
